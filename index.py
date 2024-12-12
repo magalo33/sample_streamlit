@@ -45,7 +45,7 @@ def main():
     
     st.sidebar.markdown(
     """
-    <h1 style="font-size:20px;"><center>PROCESAMIENTO DE DATOS SECUENCIALES CON DEEP LEARNING</center></h1>
+    <h1 style="font-size:15px;color:blue;"><center>PROCESAMIENTO DE DATOS SECUENCIALES CON DEEP LEARNING</center></h1>
     <h1 style="font-size:20px;">INTEGRANTES:</h1>
     <ul style="font-size:12px;">
         <li>Sandra Luengas Aponte-ID UAO:2248280</li>
