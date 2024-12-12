@@ -82,6 +82,15 @@ def main():
             st.write("Última semana:", st.session_state.ayer)
             st.write("Pensar en la muerte:", st.session_state.morir)
             st.write("Pensamientos suicidas:", st.session_state.suicidio)
+            
+            st.session_state.p_nombre = ""
+            st.session_state.p_apellido = ""
+            st.session_state.p_genero = ""
+            st.session_state.p_edad = ""
+            st.session_state.hoy = ""
+            st.session_state.ayer = ""
+            st.session_state.morir = ""
+            st.session_state.suicidio = ""
 
 
 if __name__ == "__main__":
