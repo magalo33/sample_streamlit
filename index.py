@@ -43,12 +43,19 @@ def main():
     
     ver = False
     
-    st.sidebar.write("**Procesamiento de datos secuenciales:**")
-    st.sidebar.write("Sandra Luengas Aponte-ID UAO:2248280")
-    st.sidebar.write("John Alexander Léon Torres-ID UAO: 2248372")
-    st.sidebar.write("Jorge Leonardo Prada Dániel-ID UAO:2246604")
-    st.sidebar.write("Miguel Arcesio Londoño Garzon-ID UAO: 2246382")
-    st.sidebar.write("__________________________________________")
+    st.sidebar.markdown(
+    """
+    <h1 style="font-size:20px; color:blue;">Integrantes:</h1>
+    <h2 style="font-size:15px;">Integrantes:</h2>
+    <ul style="font-size:12px;">
+        <li>Sandra Luengas Aponte-ID UAO:2248280</li>
+        <li>John Alexander Léon Torres-ID UAO: 2248372</li>
+        <li>Jorge Leonardo Prada Dániel-ID UAO:2246604</li>
+        <li>Miguel Arcesio Londoño Garzon-ID UAO: 2246382</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
+)
     
     
     st.sidebar.title("Froid")
