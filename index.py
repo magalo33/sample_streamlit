@@ -45,8 +45,7 @@ def main():
     
     st.sidebar.markdown(
     """
-    <h1 style="font-size:20px; color:blue;">Integrantes:</h1>
-    <h2 style="font-size:15px;">Integrantes:</h2>
+    <h1 style="font-size:20px;">Integrantes:</h1>
     <ul style="font-size:12px;">
         <li>Sandra Luengas Aponte-ID UAO:2248280</li>
         <li>John Alexander Léon Torres-ID UAO: 2248372</li>
@@ -58,7 +57,7 @@ def main():
 )
     
     
-    st.sidebar.title("Froid")
+    st.sidebar.title("Froid-IA")
     current_step = st.sidebar.selectbox("Diligencie los siguientes campos", ["Datos del paciente", "Estado de ánimo", "Pensamientos"])
 
     if current_step == "Datos del paciente":
