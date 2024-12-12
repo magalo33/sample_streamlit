@@ -43,6 +43,13 @@ def main():
     
     ver = False
     
+    st.sidebar.write("**Procesamiento de datos secuenciales:**")
+    st.sidebar.write("Sandra Luengas Aponte-ID UAO:2248280")
+    st.sidebar.write("John Alexander Léon Torres-ID UAO: 2248372")
+    st.sidebar.write("Jorge Leonardo Prada Dániel-ID UAO:2246604")
+    st.sidebar.write("Miguel Arcesio Londoño Garzon-ID UAO: 2246382")
+    st.sidebar.write("__________________________________________")
+    
     
     st.sidebar.title("Froid")
     current_step = st.sidebar.selectbox("Diligencie los siguientes campos", ["Datos del paciente", "Estado de ánimo", "Pensamientos"])
