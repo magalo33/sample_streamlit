@@ -46,7 +46,7 @@ def main():
     st.sidebar.markdown(
     """
     <h1 style="font-size:15px;color:#900C3F;"><center>PROCESAMIENTO DE DATOS SECUENCIALES CON DEEP LEARNING</center></h1>
-    <h1 style="font-size:20px;">INTEGRANTES:</h1>
+    <h1 style="font-size:20px;color:#900C3F;"><center>Taller final del Módulo 2</center></h1>
     <ul style="font-size:12px;">
         <li>Sandra Luengas Aponte-ID UAO:2248280</li>
         <li>John Alexander Léon Torres-ID UAO: 2248372</li>
