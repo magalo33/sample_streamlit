@@ -45,7 +45,7 @@ def main():
     
     
     st.sidebar.title("Froid")
-    current_step = st.sidebar.selectbox("Step", ["Datos del paciente", "Estado de ánimo", "Pensamientos"])
+    current_step = st.sidebar.selectbox("Diligencie los siguientes campos", ["Datos del paciente", "Estado de ánimo", "Pensamientos"])
 
     if current_step == "Datos del paciente":
         step_1()
