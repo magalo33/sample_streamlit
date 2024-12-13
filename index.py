@@ -39,6 +39,21 @@ def step_3():
     st.session_state.suicidio = st.selectbox('¿Ha tenido pensamientos suicidas?', ['No', 'Si'], index=['No', 'Si'].index(st.session_state.suicidio) if st.session_state.suicidio else 0)
 
 
+
+def respuesta():
+    return (
+        f"Nombre: {st.session_state.p_nombre}\n"
+        f"Apellido: {st.session_state.p_apellido}\n"
+        f"Género: {st.session_state.p_genero}\n"
+        f"Edad: {st.session_state.p_edad}\n"
+        f"Estado de ánimo hoy: {st.session_state.hoy}\n"
+        f"Estado de ánimo última semana: {st.session_state.ayer}\n"
+        f"Pensamientos sobre la muerte: {st.session_state.morir}\n"
+        f"Pensamientos suicidas: {st.session_state.suicidio}\n"
+    )    
+
+
+
 def main():    
     
     ver = False
@@ -55,9 +70,8 @@ def main():
     </ul>
     """,
     unsafe_allow_html=True
-)
-    
-    
+    )
+
     st.sidebar.title("Froid-IA")
     current_step = st.sidebar.selectbox("Diligencie los siguientes campos", ["Datos del paciente", "Estado de ánimo", "Pensamientos"])
 
@@ -87,6 +101,7 @@ def main():
     # Mostrar todos los datos recopilados
     if ver:        
         if st.sidebar.button("Analizar"):
+            
             st.write("Datos recopilados:")
             st.write("Nombre:", st.session_state.p_nombre)
             st.write("Apellido:", st.session_state.p_apellido)
@@ -96,6 +111,15 @@ def main():
             st.write("Última semana:", st.session_state.ayer)
             st.write("Pensar en la muerte:", st.session_state.morir)
             st.write("Pensamientos suicidas:", st.session_state.suicidio)
+            st.write("----------------------------------------------------")
+            
+            
+            
+            st.write(respuesta())
+            
+            
+            
+            
             
             st.session_state.p_nombre = ""
             st.session_state.p_apellido = ""
