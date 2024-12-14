@@ -50,7 +50,7 @@ def resumen(texto):
 #Metodo para generar el prompt a partir de los campos diligenciados
 def prompt_generado():
     prompt = (
-    "Basado en el documento anexo, genera preguntas tipo ICFES(recuerda que Las preguntas del ICFES son de selección múltiple con única respuesta, es decir, tienen un enunciado y cuatro opciones de respuesta, de las cuales solo una es la correcta) "
+    "Basado en el documento anexo, genera preguntas tipo ICFES(recuerda que Las preguntas del ICFES son de selección múltiple con única respuesta, es decir, tienen un enunciado y cuatro opciones de respuesta, de las cuales solo una es la correcta). Es muy importante que todas las preguntas estén basadas en el documento. No generes preguntas que no se respondan en el documento. "
     "Para generar las preguntas, ten en cuenta los siguentes puntos: \n\n"
     f"nivel educativo: {st.session_state.nivel},"
     f"Titulo del texto: {st.session_state.titulo},"
