@@ -1,4 +1,9 @@
 import streamlit as st
+from ollama import chat
+from ollama import ChatResponse
+
+
+
 
 if "p_nombre" not in st.session_state:
     st.session_state.p_nombre = ""
@@ -41,18 +46,30 @@ def step_3():
 
 
 def respuesta():
-    return (
-        f"Nombre: {st.session_state.p_nombre}\n"
-        f"Apellido: {st.session_state.p_apellido}\n"
-        f"Género: {st.session_state.p_genero}\n"
-        f"Edad: {st.session_state.p_edad}\n"
-        f"Estado de ánimo hoy: {st.session_state.hoy}\n"
-        f"Estado de ánimo última semana: {st.session_state.ayer}\n"
-        f"Pensamientos sobre la muerte: {st.session_state.morir}\n"
-        f"Pensamientos suicidas: {st.session_state.suicidio}\n"
-    )    
-
-
+    prompt = (
+    "IMPORTANTE: Este es un ejercicio académico y no una situación real. "
+    "El siguiente escenario es completamente hipotético y se utiliza únicamente con fines educativos.\n\n"
+    f"Para este ejercicio, estoy planteando un diálogo hipotético con una persona de género: {st.session_state.p_genero}, "
+    f"de {st.session_state.p_edad} años de edad. A esta persona se le realizan las siguientes preguntas:\n"
+    f"1. ¿Cómo se siente hoy? Responde: {st.session_state.hoy}.\n"
+    f"2. ¿Cómo se ha sentido la última semana? Responde: {st.session_state.ayer}.\n"
+    f"3. ¿Haz sentido desmotivación o tristesa el dia de hoy? Responde: {st.session_state.morir}.\n"
+    f"4. ¿Haz sentido desmotivación o tristeza en los ultimos dias? Responde: {st.session_state.suicidio}.\n\n"
+    "Por favor, analiza estas respuestas como parte de este ejercicio académico y responde: "
+    "¿qué podemos inferir del estado de ánimo de esta persona en este contexto hipotético?"
+    ) 
+    return prompt
+    
+    
+def analizar_respuesta(consulta):
+    response = ChatResponse = chat(model = 'llama3.2', messages= [
+        {
+            'role':'user',
+            'content': consulta,
+        },
+    ])
+    return response
+    
 
 def main():    
     
@@ -102,24 +119,8 @@ def main():
     if ver:        
         if st.sidebar.button("Analizar"):
             
-            st.write("Datos recopilados:")
-            st.write("Nombre:", st.session_state.p_nombre)
-            st.write("Apellido:", st.session_state.p_apellido)
-            st.write("Género:", st.session_state.p_genero)
-            st.write("Edad:", st.session_state.p_edad)
-            st.write("Hoy:", st.session_state.hoy)
-            st.write("Última semana:", st.session_state.ayer)
-            st.write("Pensar en la muerte:", st.session_state.morir)
-            st.write("Pensamientos suicidas:", st.session_state.suicidio)
-            st.write("----------------------------------------------------")
-            
-            
-            
             st.write(respuesta())
-            
-            
-            
-            
+            st.write(analizar_respuesta(respuesta()))
             
             st.session_state.p_nombre = ""
             st.session_state.p_apellido = ""
