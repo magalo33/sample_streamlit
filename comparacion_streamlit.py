@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, ConfusionMatrixDisplay
+import numpy as np
+
 
 # Streamlit UI
 st.title("Evaluación del Rendimiento del Modelo Ollama")
@@ -31,12 +33,16 @@ st.write(f"### Exactitud del modelo: {accuracy:.2%}")
 
 # 2. Matriz de Confusión
 conf_matrix = confusion_matrix(y_true, y_pred, labels=np.unique(y_true))
-
 st.write("### Matriz de Confusión")
 fig, ax = plt.subplots()
 cm_display = ConfusionMatrixDisplay(confusion_matrix=conf_matrix, display_labels=np.unique(y_true))
 cm_display.plot(cmap='viridis', ax=ax, xticks_rotation='vertical')
 st.pyplot(fig)
+
+
+    
+    
+
 
 # 3. Reporte de Clasificación
 st.write("### Reporte de Clasificación")
