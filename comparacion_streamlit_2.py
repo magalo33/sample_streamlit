@@ -2,6 +2,7 @@ import streamlit as st
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, ConfusionMatrixDisplay
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 
@@ -19,6 +20,7 @@ data = cargar_datos()
 # Columnas de interés
 correct_col = 'Respuesta Correcta'
 pred_col = 'Respuesta Ollama'
+data['Correcto'] = data[correct_col] == data[pred_col]
 errores = data[data['Correcto'] == False]
 
 # Comparar respuestas correctas con las del modelo Ollama
@@ -45,7 +47,9 @@ st.sidebar.markdown(
 st.markdown("<h1 style=\"font-size:40px;color:"+color_titulo+";\"><center>Evaluación del Rendimiento del Modelo Ollama</center></h1>",unsafe_allow_html=True)
 
 # Menú en la barra lateral
-menu = st.sidebar.selectbox("Selecciona una opción", ["Descripción", "Planteamiento", "Contexto", "Exactitud", "Reporte de Clasificación", "Distribución", "Respuestas Incorrectas"])
+menu = st.sidebar.selectbox("Selecciona una opción", ["Descripción", "Planteamiento", "Contexto", "Exactitud", "Reporte de Clasificación",
+                                                      "Distribución", "Respuestas Incorrectas", "Respuestas Incorrectas(Contexto)",
+                                                      "Matriz de Confusión"])
 
 # Contenido dinámico según la opción seleccionada
 if menu == "Descripción":
@@ -70,7 +74,7 @@ elif menu == "Exactitud":
     st.markdown(
     """
     <h2 style=\"font-size:20px;color:white; text-align:justify;\">Interpretación</h2>
-    <ul style="font-size:12px;">
+    <ul style="font-size:15px;">
         <li>El modelo clasificó correctamente aproximadamente 7 de cada 10 casos.</li>
         <li>Dado que el dataset contiene registros que se pueden interpretar como clases únicas, se puede tomar este valor como un dato confiable, sin embargo, se debe analizar este dato junto con otras métricas que se mostraran mas adelante.</li>
     </ul>
@@ -128,8 +132,66 @@ elif menu == "Distribución":
     unsafe_allow_html=True
     )    
 elif menu == "Respuestas Incorrectas":
-    st.markdown("<h1 style=\"font-size:25px;color:"+color_titulo+";\">Total de respuestas incorrectas</h1>",unsafe_allow_html=True)
+    st.markdown("<h1 style=\"font-size:25px;color:"+color_titulo+";\">Respuestas Incorrectas</h1>",unsafe_allow_html=True)
     st.dataframe(errores[["Contexto", "Pregunta", correct_col, pred_col]].head(10))
+    st.markdown(
+    """
+    <h2 style=\"font-size:20px;color:white; text-align:justify;\">Interpretación</h2>
+    <ul style="font-size:15px;">
+        <li>Se evidencian limitaciones en la comprensión y extracción de información clave por parte del modelo.</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
+    )    
+elif menu == "Respuestas Incorrectas(Contexto)":
+    st.markdown("<h1 style=\"font-size:25px;color:"+color_titulo+";\">Respuestas Incorrectas Por Contexto</h1>",unsafe_allow_html=True)
+    context_counts = data.groupby(['Contexto', 'Correcto']).size().unstack(fill_value=0)
+
+    if not context_counts.empty:
+        fig, ax = plt.subplots(figsize=(10, 6))
+        context_counts.plot(kind='bar', stacked=True, color=['lightcoral', 'lightgreen'], ax=ax)
+        plt.title("Respuestas Correctas e Incorrectas por Contexto")
+        plt.xlabel("Contexto")
+        plt.ylabel("Cantidad de Respuestas")
+        st.pyplot(fig)
+    else:
+        st.write("No hay suficientes datos para mostrar respuestas por contexto.")    
+    st.markdown(
+    """
+    <h2 style=\"font-size:20px;color:white; text-align:justify;\">Interpretación</h2>
+    <ul style="font-size:15px;">
+        <li>Se puede observar que se uso un mismo contexto para generar varias preguntas.</li>
+        <li>Las barras verdes(respuesta correcta) predominan en todos los casos.</li>
+        <li>Las barras rojas(respuesta incorrecta) solo predimina en un contxto. En la mayoria de los casos, aunque esta presente, se refleja en menos cantidad.</li>
+        <li>Algunos contextos tienen un alto número de respuestas correctas con pocas respuestas incorrectas.</li>
+        <li>Algunos contextos tienen un alto número de respuestas incorrectas, lo que sugiere dificultad del modelo en contextos específicos(vale la pena un análisis mas detallado de este punto).</li>
+        <li>Algunos contextos tienen la totalidad de respuestas correctas, lo que sugiere que en ciertos contextos em modelo entiende bien la información(vale la pena un análisis mas detallado de este punto).</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
+    )    
+elif menu == "Matriz de Confusión":
+    st.markdown("<h1 style=\"font-size:25px;color:"+color_titulo+";\">Matriz de Confusión</h1>",unsafe_allow_html=True)
+    conf_matrix = confusion_matrix(y_true, y_pred, labels=np.unique(y_true))
+    st.write("### Matriz de Confusión")
+    fig, ax = plt.subplots()
+    cm_display = ConfusionMatrixDisplay(confusion_matrix=conf_matrix, display_labels=np.unique(y_true))
+    cm_display.plot(cmap='viridis', ax=ax, xticks_rotation='vertical')
+    st.pyplot(fig)
+    st.markdown(
+    """
+    <h2 style=\"font-size:20px;color:white; text-align:justify;\">Interpretación</h2>
+    <ul style="font-size:15px;">
+        <li>La gran cantidad de clases presenta un problema para el análisis detallado de la matriz de confusión.</li>
+        <li>El predominio del color amarillo confrima lo que muestran los datos analizados anteriormente, y es que el modelo clasifica correctamente la mayoria de los casos.</li>
+        <li>Se requiere usar otro método para un analisis detallado, ya que no es posible ver datos específicos en esta matriz, solo generalidades.</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
+    ) 
+
+
+
 
 
 
